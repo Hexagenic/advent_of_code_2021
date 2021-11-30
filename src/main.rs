@@ -1,6 +1,6 @@
 use std::env;
-mod solutions;
 mod error;
+mod solutions;
 use error::Error;
 
 fn run() -> Result<(), Error> {
