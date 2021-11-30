@@ -51,10 +51,7 @@ fn get_args() -> Result<(u32, Vec<u8>), Error> {
 }
 
 fn main() {
-    match run() {
-        Err(e) => {
-            eprintln!("Error: {:?}", e);
-        }
-        _ => (),
+    if let Err(e) = run() {
+        eprintln!("Error: {:?}", e);
     }
 }
