@@ -23,5 +23,7 @@ jobs:
       run: cargo test --verbose
     - name: Run clippy
       run: cargo clippy -- -D clippy::all -D clippy::pedantic
+    - name: Run fmt
+      run: cargo fmt -- --check
     - name: Run solutions
       run: cargo run --release
