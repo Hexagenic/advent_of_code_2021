@@ -12,18 +12,21 @@ env:
 jobs:
   build_and_run:
     name: Build and run
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --release --verbose
+    - name: Run solutions
+      run: cargo run --release
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Run tests
       run: cargo test --verbose
     - name: Run clippy
       run: cargo clippy -- -D clippy::all -D clippy::pedantic
     - name: Run fmt
       run: cargo fmt -- --check
-    - name: Run solutions
-      run: cargo run --release
