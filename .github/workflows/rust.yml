@@ -18,7 +18,7 @@ jobs:
     - name: Build
       run: cargo build --release --verbose
     - name: Run solutions
-      run: cargo run --release
+      run: time ./target/release/advent_of_code_2021
   verify:
     name: Verify
     runs-on: ubuntu-latest
