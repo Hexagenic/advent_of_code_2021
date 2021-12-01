@@ -10,6 +10,9 @@ pub fn get_solution(day: u8) -> PuzzleSolution {
     }
 }
 
+#[allow(unused)]
+pub const MAX_SOLVED_DAY: u8 = 1;
+
 #[allow(clippy::missing_errors_doc)]
 pub fn day1() -> Result<(Option<i64>, Option<i64>), Error> {
     let path = std::env::current_dir()?.join("input").join("day1.txt");

@@ -9,3 +9,11 @@ criterion = {version="0.3.5", features=["html_reports"]}
 [[bench]]
 name = "aoc_bench"
 harness = false
+
+[lib]
+bench = false
+
+[[bin]]
+name = "advent_of_code_2021"
+path = "src/main.rs"
+bench = false
