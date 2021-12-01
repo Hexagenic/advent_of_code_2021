@@ -10,16 +10,16 @@ fn run() -> Result<(), Error> {
         println!("Solving");
 
         for day in &puzzles {
-            let (part1, part2) = solutions::get_solution(*day);
+            let (solution1, solution2) = solutions::get_solution(*day)()?;
 
-            if let Some(part1) = part1 {
-                println!("{}a: {}", day, part1());
+            if let Some(solution1) = solution1 {
+                println!("{}a: {}", day, solution1);
             } else {
                 println!("{}a: Incomplete", day);
             }
 
-            if let Some(part2) = part2 {
-                println!("{}b: {}", day, part2());
+            if let Some(solution2) = solution2 {
+                println!("{}b: {}", day, solution2);
             } else {
                 println!("{}b: Incomplete", day);
             }
