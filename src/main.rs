@@ -11,15 +11,22 @@ fn run() -> Result<(), Error> {
 
         for day in &puzzles {
             let (solution1, solution2) = solutions::get_solution(*day);
+            let input_file = format!("day{}.txt", day);
+            let path = std::env::current_dir()
+                .unwrap()
+                .join("input")
+                .join(&input_file);
 
             if let Some(solution1) = solution1 {
-                println!("{}a: {}", day, solution1()?);
+                let file: String = std::fs::read_to_string(&path)?;
+                println!("{}a: {}", day, solution1(&file));
             } else {
                 println!("{}a: Incomplete", day);
             }
 
             if let Some(solution2) = solution2 {
-                println!("{}b: {}", day, solution2()?);
+                let file: String = std::fs::read_to_string(&path)?;
+                println!("{}a: {}", day, solution2(&file));
             } else {
                 println!("{}b: Incomplete", day);
             }

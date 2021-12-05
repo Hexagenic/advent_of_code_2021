@@ -1,31 +1,22 @@
-use crate::error::Error;
-
-pub fn part_a() -> Result<i64, Error> {
-    let path = std::env::current_dir()?.join("input").join("day1.txt");
-
-    let file = std::fs::read_to_string(path)?;
-    let lines: Vec<i32> = file.split_whitespace().flat_map(str::parse).collect();
-
+pub fn part_a(file: &str) -> i64 {
+    let lines = file.split_whitespace().flat_map(str::parse);
     let mut last_line: Option<i32> = None;
 
     let mut count = 0;
 
-    for line in &lines {
+    for line in lines {
         if let Some(last_line) = last_line {
-            if *line > last_line {
+            if line > last_line {
                 count += 1;
             }
         }
-        last_line = Some(*line);
+        last_line = Some(line);
     }
 
-    Ok(count)
+    count
 }
 
-pub fn part_b() -> Result<i64, Error> {
-    let path = std::env::current_dir()?.join("input").join("day1.txt");
-
-    let file = std::fs::read_to_string(path)?;
+pub fn part_b(file: &str) -> i64 {
     let lines: Vec<i32> = file.split_whitespace().flat_map(str::parse).collect();
 
     let mut last_line: Option<i32> = None;
@@ -47,5 +38,5 @@ pub fn part_b() -> Result<i64, Error> {
         last_line = Some(line);
     }
 
-    Ok(count)
+    count
 }

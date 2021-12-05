@@ -21,10 +21,7 @@ fn parse_command(input: &str) -> Result<Command, Error> {
     }
 }
 
-pub fn part_a() -> Result<i64, Error> {
-    let path = std::env::current_dir()?.join("input").join("day2.txt");
-
-    let file = std::fs::read_to_string(path)?;
+pub fn part_a(file: &str) -> i64 {
     let commands = file
         .split('\n')
         .filter(|l| !l.is_empty())
@@ -41,13 +38,10 @@ pub fn part_a() -> Result<i64, Error> {
         }
     }
 
-    Ok(depth * distance)
+    depth * distance
 }
 
-pub fn part_b() -> Result<i64, Error> {
-    let path = std::env::current_dir()?.join("input").join("day2.txt");
-
-    let file = std::fs::read_to_string(path)?;
+pub fn part_b(file: &str) -> i64 {
     let commands = file
         .split('\n')
         .filter(|l| !l.is_empty())
@@ -68,5 +62,5 @@ pub fn part_b() -> Result<i64, Error> {
         }
     }
 
-    Ok(depth * distance)
+    depth * distance
 }

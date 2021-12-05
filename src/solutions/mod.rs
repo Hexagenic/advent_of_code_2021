@@ -1,9 +1,7 @@
-use crate::error::Error;
-
 mod day1;
 mod day2;
 
-pub type PuzzleSolution = Option<fn() -> Result<i64, Error>>;
+pub type PuzzleSolution = Option<fn(&str) -> i64>;
 
 #[must_use]
 pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
