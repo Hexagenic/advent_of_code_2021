@@ -35,5 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Build benchmarks
+      run: cargo bench --no-run
     - name: Run benchmarks
       run: cargo bench -- -n
