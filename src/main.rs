@@ -10,16 +10,16 @@ fn run() -> Result<(), Error> {
         println!("Solving");
 
         for day in &puzzles {
-            let (solution1, solution2) = solutions::get_solution(*day)()?;
+            let (solution1, solution2) = solutions::get_solution(*day);
 
             if let Some(solution1) = solution1 {
-                println!("{}a: {}", day, solution1);
+                println!("{}a: {}", day, solution1()?);
             } else {
                 println!("{}a: Incomplete", day);
             }
 
             if let Some(solution2) = solution2 {
-                println!("{}b: {}", day, solution2);
+                println!("{}b: {}", day, solution2()?);
             } else {
                 println!("{}b: Incomplete", day);
             }
@@ -36,7 +36,7 @@ fn get_args() -> Result<(u32, Vec<u8>), Error> {
     let times: Option<Result<u32, _>> = args.next().map(|s| s.parse());
 
     if times.is_none() {
-        return Ok((1, (1..=25).collect()));
+        return Ok((1, (1..=solutions::MAX_SOLVED_DAY).collect()));
     }
 
     let times = times.unwrap()?;
@@ -44,7 +44,7 @@ fn get_args() -> Result<(u32, Vec<u8>), Error> {
     let puzzles = args.map(|s| s.parse()).collect::<Result<Vec<u8>, _>>()?;
 
     if puzzles.is_empty() {
-        return Ok((times, (1..=25).collect()));
+        return Ok((times, (1..=solutions::MAX_SOLVED_DAY).collect()));
     }
 
     Ok((times, puzzles))
