@@ -6,27 +6,55 @@ extern crate criterion;
 use criterion::BenchmarkId;
 use criterion::Criterion;
 
+#[derive(Clone, Copy)]
+struct DayPart(u8, u8, fn(&str) -> i64);
+
+impl std::fmt::Display for DayPart {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+        write!(f, "{} part {}", self.0, self.1)
+    }
+}
+
 fn criterion_benchmark(c: &mut Criterion) {
-    let mut group = c.benchmark_group("day");
-    for day in 1..=advent_of_code_2021::solutions::MAX_SOLVED_DAY {
-        group.bench_with_input(BenchmarkId::from_parameter(day), &day, |b, &day| {
-            let input_file = format!("day{}.txt", day);
+    let days = 1..=advent_of_code_2021::solutions::MAX_SOLVED_DAY;
+    let day_parts: Vec<DayPart> = days
+        .clone()
+        .flat_map(|d| {
+            let mut foo: Vec<DayPart> = vec![];
+
+            let (part_a, part_b) = advent_of_code_2021::solutions::get_solution(d);
+            if let Some(part_a) = part_a {
+                foo.push(DayPart(d, 1, part_a))
+            }
+            if let Some(part_b) = part_b {
+                foo.push(DayPart(d, 2, part_b))
+            }
+
+            foo
+        })
+        .collect();
+
+    let inputs: Vec<String> = days
+        .map(|d| {
+            let input_file = format!("day{}.txt", d);
             let path = std::env::current_dir()
                 .unwrap()
                 .join("input")
                 .join(&input_file);
-            let file: String = std::fs::read_to_string(&path).unwrap();
+            std::fs::read_to_string(&path).unwrap()
+        })
+        .collect();
 
-            b.iter(|| {
-                let (part_a, part_b) = advent_of_code_2021::solutions::get_solution(day);
-                if let Some(part_a) = part_a {
-                    part_a(&file);
-                }
-                if let Some(part_b) = part_b {
-                    part_b(&file);
-                }
-            });
-        });
+    let mut group = c.benchmark_group("day");
+    for day_part in day_parts {
+        group.bench_with_input(
+            BenchmarkId::from_parameter(day_part),
+            &day_part,
+            |b, &day_part| {
+                let file = &inputs[(day_part.0 as usize) - 1];
+                b.iter(|| day_part.2(&file));
+            },
+        );
     }
     group.finish();
 }
