@@ -50,7 +50,7 @@ pub fn part_a(file: &str) -> i64 {
         depth: i64,
         distance: i64,
     }
-    
+
     impl Default for Location {
         fn default() -> Self {
             Location {
@@ -59,17 +59,29 @@ pub fn part_a(file: &str) -> i64 {
             }
         }
     }
-    
+
     impl Location {
         fn from_command(c: Command) -> Self {
             match c {
-                Command::Forward(d) => Location{depth: 0, distance: d},
-                Command::Down(d) => Location{depth: d, distance: 0},
-                Command::Up(d) => Location{depth: -d, distance: 0 },
+                Command::Forward(d) => Location {
+                    depth: 0,
+                    distance: d,
+                },
+                Command::Down(d) => Location {
+                    depth: d,
+                    distance: 0,
+                },
+                Command::Up(d) => Location {
+                    depth: -d,
+                    distance: 0,
+                },
             }
         }
         fn add(a: Location, b: Location) -> Self {
-            Location {depth: a.depth + b.depth, distance: a.distance + b.distance}
+            Location {
+                depth: a.depth + b.depth,
+                distance: a.distance + b.distance,
+            }
         }
     }
 
