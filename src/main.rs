@@ -26,7 +26,7 @@ fn run() -> Result<(), Error> {
 
             if let Some(solution2) = solution2 {
                 let file: String = std::fs::read_to_string(&path)?;
-                println!("{}a: {}", day, solution2(&file));
+                println!("{}b: {}", day, solution2(&file));
             } else {
                 println!("{}b: Incomplete", day);
             }
