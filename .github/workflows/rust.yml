@@ -30,3 +30,10 @@ jobs:
       run: cargo clippy -- -D clippy::all -D clippy::pedantic
     - name: Run fmt
       run: cargo fmt -- --check
+  bench:
+    name: Bench
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run benchmarks
+      run: cargo bench -- -n
