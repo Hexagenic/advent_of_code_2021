@@ -11,21 +11,17 @@ fn parse_population(input: &str) -> FishPopulation {
 }
 
 fn simulate_step(population: FishPopulation) -> FishPopulation {
-    let new_born = population[0];
-
-    let mut new_population = [0; 9];
-
-    new_population[0] = population[1];
-    new_population[1] = population[2];
-    new_population[2] = population[3];
-    new_population[3] = population[4];
-    new_population[4] = population[5];
-    new_population[5] = population[6];
-    new_population[6] = population[7] + new_born;
-    new_population[7] = population[8];
-    new_population[8] = new_born;
-
-    new_population
+    [
+        population[1],
+        population[2],
+        population[3],
+        population[4],
+        population[5],
+        population[6],
+        population[7] + population[0],
+        population[8],
+        population[0],
+    ]
 }
 
 fn simulate_n_steps(first_generation: FishPopulation, steps: u32) -> FishPopulation {
