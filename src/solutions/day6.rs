@@ -1,4 +1,4 @@
-type FishPopulation = [usize; 9];
+type FishPopulation = [i64; 9];
 
 fn parse_population(input: &str) -> FishPopulation {
     input
@@ -38,7 +38,7 @@ fn simulate_n_steps(first_generation: FishPopulation, steps: u32) -> FishPopulat
 }
 
 fn count_fish(population: FishPopulation) -> i64 {
-    population.iter().sum::<usize>() as i64
+    population.iter().sum()
 }
 
 pub fn part_a(file: &str) -> i64 {
