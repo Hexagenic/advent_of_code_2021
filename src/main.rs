@@ -17,15 +17,15 @@ fn run() -> Result<(), Error> {
                 .join("input")
                 .join(&input_file);
 
+            let file: String = std::fs::read_to_string(&path)?;
+
             if let Some(solution1) = solution1 {
-                let file: String = std::fs::read_to_string(&path)?;
                 println!("{}a: {}", day, solution1(&file));
             } else {
                 println!("{}a: Incomplete", day);
             }
 
             if let Some(solution2) = solution2 {
-                let file: String = std::fs::read_to_string(&path)?;
                 println!("{}b: {}", day, solution2(&file));
             } else {
                 println!("{}b: Incomplete", day);
