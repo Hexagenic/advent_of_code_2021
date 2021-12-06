@@ -111,7 +111,7 @@ pub fn part_a(file: &str) -> i64 {
         .flat_map(|a| {
             lines
                 .iter()
-                .flat_map(move |b| Line::overlap(&a, &b))
+                .flat_map(move |b| Line::overlap(a, b))
                 .collect::<Vec<Point>>()
         })
         .collect();
@@ -128,7 +128,7 @@ pub fn part_b(file: &str) -> i64 {
         .flat_map(|a| {
             lines
                 .iter()
-                .flat_map(move |b| Line::overlap(&a, &b))
+                .flat_map(move |b| Line::overlap(a, b))
                 .collect::<Vec<Point>>()
         })
         .collect();
