@@ -1,5 +1,3 @@
-use rayon::prelude::*;
-
 // Segments by number
 // 0 => 6
 // 1 => 2
@@ -33,10 +31,9 @@ pub fn part_a(file: &str) -> i64 {
             .count() as i64)
     }
 
-    file.par_lines()
-        .flat_map(|l| l.split(" | ").nth(1))
-        .fold(|| 0, count_easy)
-        .sum::<i64>()
+    file.lines()
+        .filter_map(|l| l.split(" | ").nth(1))
+        .fold(0, count_easy)
 }
 
 #[cfg(test)]
