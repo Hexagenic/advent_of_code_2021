@@ -46,7 +46,7 @@ fn criterion_benchmark(c: &mut Criterion) {
         .collect();
 
     let mut group = c.benchmark_group("day");
-    for day_part in day_parts {
+    for day_part in &day_parts {
         group.bench_with_input(
             BenchmarkId::from_parameter(day_part),
             &day_part,
@@ -57,6 +57,15 @@ fn criterion_benchmark(c: &mut Criterion) {
         );
     }
     group.finish();
+
+    c.bench_function("all", |b| {
+        b.iter(|| {
+            for day_part in &day_parts {
+                let file = &inputs[(day_part.0 as usize) - 1];
+                day_part.2(&file);
+            }
+        })
+    });
 }
 
 criterion_group!(benches, criterion_benchmark);
