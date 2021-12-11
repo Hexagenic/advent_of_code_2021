@@ -70,21 +70,25 @@ impl Line {
 }
 
 struct Canvas {
-    pixels: Vec<u8>
+    pixels: Vec<u8>,
 }
 
 impl Canvas {
     fn new() -> Self {
-        Canvas { pixels: vec![0; 1000 * 1000]}
+        Canvas {
+            pixels: vec![0; 1000 * 1000],
+        }
     }
 
+    #[allow(clippy::cast_possible_truncation)]
+    #[allow(clippy::cast_sign_loss)]
     fn draw(self, line: &Line) -> Self {
         let mut pixels = self.pixels;
         for p in line.get_points() {
             pixels[(p.x * 1000 + p.y) as usize] += 1;
         }
 
-        Canvas {pixels}
+        Canvas { pixels }
     }
 
     fn count(&self) -> i64 {
@@ -93,18 +97,18 @@ impl Canvas {
 }
 
 pub fn part_a(file: &str) -> i64 {
-    file
-        .lines()
+    file.lines()
         .map(Line::parse_line)
         .filter(Line::is_hor_or_vert)
-        .fold(Canvas::new(), |acc, l| acc.draw(&l)).count()
+        .fold(Canvas::new(), |acc, l| acc.draw(&l))
+        .count()
 }
 
 pub fn part_b(file: &str) -> i64 {
-    file
-        .lines()
+    file.lines()
         .map(Line::parse_line)
-        .fold(Canvas::new(), |acc, l| acc.draw(&l)).count()
+        .fold(Canvas::new(), |acc, l| acc.draw(&l))
+        .count()
 }
 
 #[cfg(test)]
