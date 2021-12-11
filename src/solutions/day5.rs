@@ -67,73 +67,44 @@ impl Line {
 
         vec![]
     }
+}
 
-    fn overlap(a: &Line, b: &Line) -> Vec<Point> {
-        if a == b {
-            return vec![];
+struct Canvas {
+    pixels: Vec<u8>
+}
+
+impl Canvas {
+    fn new() -> Self {
+        Canvas { pixels: vec![0; 1000 * 1000]}
+    }
+
+    fn draw(self, line: &Line) -> Self {
+        let mut pixels = self.pixels;
+        for p in line.get_points() {
+            pixels[(p.x * 1000 + p.y) as usize] += 1;
         }
 
-        let a_left = i64::min(a.from.x, a.to.x);
-        let b_left = i64::min(b.from.x, b.to.x);
-        let a_right = i64::max(a.from.x, a.to.x);
-        let b_right = i64::max(b.from.x, b.to.x);
-        let a_top = i64::min(a.from.y, a.to.y);
-        let b_top = i64::min(b.from.y, b.to.y);
-        let a_bottom = i64::max(a.from.y, a.to.y);
-        let b_bottom = i64::max(b.from.y, b.to.y);
+        Canvas {pixels}
+    }
 
-        if b_left > a_right || b_right < a_left || b_top > a_bottom || b_bottom < a_top {
-            return vec![];
-        }
-
-        let a_points = a.get_points();
-        let b_points = b.get_points();
-
-        return a_points
-            .iter()
-            .filter(|a| b_points.contains(a))
-            .copied()
-            .collect();
+    fn count(&self) -> i64 {
+        self.pixels.iter().filter(|v| v >= &&2).count() as i64
     }
 }
 
 pub fn part_a(file: &str) -> i64 {
-    use rayon::prelude::*;
-
-    let lines = file
+    file
         .lines()
         .map(Line::parse_line)
         .filter(Line::is_hor_or_vert)
-        .collect::<Vec<_>>();
-
-    let overlaps: std::collections::HashSet<Point> = lines
-        .par_iter()
-        .flat_map(|a| {
-            lines
-                .iter()
-                .flat_map(move |b| Line::overlap(a, b))
-                .collect::<Vec<Point>>()
-        })
-        .collect();
-
-    overlaps.len() as i64
+        .fold(Canvas::new(), |acc, l| acc.draw(&l)).count()
 }
 
 pub fn part_b(file: &str) -> i64 {
-    use rayon::prelude::*;
-    let lines = file.lines().map(Line::parse_line).collect::<Vec<_>>();
-
-    let overlaps: std::collections::HashSet<Point> = lines
-        .par_iter()
-        .flat_map(|a| {
-            lines
-                .iter()
-                .flat_map(move |b| Line::overlap(a, b))
-                .collect::<Vec<Point>>()
-        })
-        .collect();
-
-    overlaps.len() as i64
+    file
+        .lines()
+        .map(Line::parse_line)
+        .fold(Canvas::new(), |acc, l| acc.draw(&l)).count()
 }
 
 #[cfg(test)]
@@ -141,7 +112,29 @@ mod tests {
     use super::*;
 
     #[test]
-    fn day5_part1() {
+    fn part1_solution() {
+        let path = std::env::current_dir()
+            .unwrap()
+            .join("input")
+            .join("day5.txt");
+        let file: String = std::fs::read_to_string(&path).unwrap();
+
+        assert_eq!(7142, part_a(&file));
+    }
+
+    #[test]
+    fn part2_solution() {
+        let path = std::env::current_dir()
+            .unwrap()
+            .join("input")
+            .join("day5.txt");
+        let file: String = std::fs::read_to_string(&path).unwrap();
+
+        assert_eq!(20012, part_b(&file));
+    }
+
+    #[test]
+    fn part1_example() {
         let path = std::env::current_dir()
             .unwrap()
             .join("input")
@@ -152,7 +145,7 @@ mod tests {
     }
 
     #[test]
-    fn day5_part2() {
+    fn part2_example() {
         let path = std::env::current_dir()
             .unwrap()
             .join("input")
@@ -205,16 +198,6 @@ mod tests {
         assert_eq!(
             Line::make(1, 2, 1, 1).get_points(),
             vec![Point { x: 1, y: 2 }, Point { x: 1, y: 1 },]
-        );
-    }
-
-    #[test]
-    fn line_overlaps() {
-        println!("Wut {:?}", Line::make(0, 1, 2, 1).get_points());
-        println!("Wut {:?}", Line::make(1, 0, 1, 2).get_points());
-        assert_eq!(
-            Line::overlap(&Line::make(0, 1, 2, 1), &Line::make(1, 0, 1, 2)),
-            vec![Point { x: 1, y: 1 }]
         );
     }
 }
