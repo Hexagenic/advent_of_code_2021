@@ -11,7 +11,7 @@ struct DayPart(u8, u8, fn(&str) -> i64);
 
 impl std::fmt::Display for DayPart {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
-        write!(f, "{} part {}", self.0, self.1)
+        write!(f, "{:02} part {}", self.0, self.1)
     }
 }
 
