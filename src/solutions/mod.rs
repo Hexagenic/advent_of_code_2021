@@ -26,7 +26,7 @@ pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
         8 => (Some(day8::part_a), Some(day8::part_b)),
         9 => (Some(day9::part_a), None),
         10 => (Some(day10::part_a), Some(day10::part_b)),
-        11 => (Some(day11::part_a), None),
+        11 => (Some(day11::part_a), Some(day11::part_b)),
         12 => (Some(day12::part_a), None),
         _ => (None, None),
     }
