@@ -1,6 +1,7 @@
 type Octopi = Vec<i32>;
 type OctopiSlice = [i32];
 
+#[allow(clippy::cast_possible_wrap)]
 fn parse_octopi(input: &str) -> Octopi {
     input
         .chars()
@@ -9,6 +10,7 @@ fn parse_octopi(input: &str) -> Octopi {
         .collect()
 }
 
+#[allow(clippy::cast_sign_loss)]
 fn flash(octopi: &mut Octopi, x: i32, y: i32) -> i64 {
     let i_start = (y * 10 + x) as usize;
 
@@ -45,6 +47,8 @@ fn flash(octopi: &mut Octopi, x: i32, y: i32) -> i64 {
     flashes
 }
 
+#[allow(clippy::cast_possible_wrap)]
+#[allow(clippy::cast_possible_truncation)]
 fn step(previous: &OctopiSlice) -> (Octopi, i64) {
     let mut current = previous.to_owned();
     let mut flashes = 0;
