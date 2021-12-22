@@ -1,4 +1,6 @@
-pub fn part_a(file: &str) -> i64 {
+use crate::solutions::Solution;
+
+pub fn part_a(file: &str) -> Solution {
     let crabs: Vec<i32> = file.split(',').flat_map(str::parse).collect();
 
     let mut shortest: i32 = i32::MAX;
@@ -10,14 +12,14 @@ pub fn part_a(file: &str) -> i64 {
         }
     }
 
-    i64::from(shortest)
+    Solution::Integer(i64::from(shortest))
 }
 
 fn sum(n: i32) -> i32 {
     (n * (n + 1)) / 2
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let crabs: Vec<i32> = file.split(',').flat_map(str::parse).collect();
 
     let mut shortest: i32 = i32::MAX;
@@ -29,7 +31,7 @@ pub fn part_b(file: &str) -> i64 {
         }
     }
 
-    i64::from(shortest)
+    Solution::Integer(i64::from(shortest))
 }
 
 #[cfg(test)]
@@ -43,7 +45,7 @@ mod tests {
             .join("input")
             .join("day7.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
-        assert_eq!(336120, part_a(&file));
+        assert_eq!(Solution::Integer(336120), part_a(&file));
     }
 
     #[test]
@@ -53,26 +55,26 @@ mod tests {
             .join("input")
             .join("day7.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
-        assert_eq!(96864235, part_b(&file));
+        assert_eq!(Solution::Integer(96864235), part_b(&file));
     }
 
     #[test]
     fn example_a() {
-        assert_eq!(37, part_a("16,1,2,0,4,2,7,1,2,14"));
+        assert_eq!(Solution::Integer(37), part_a("16,1,2,0,4,2,7,1,2,14"));
     }
 
     #[test]
     fn example_b() {
-        assert_eq!(168, part_b("16,1,2,0,4,2,7,1,2,14"));
+        assert_eq!(Solution::Integer(168), part_b("16,1,2,0,4,2,7,1,2,14"));
     }
 
     #[test]
     fn zero_distance() {
-        assert_eq!(0, part_a("16"));
-        assert_eq!(0, part_a("16,16"))
+        assert_eq!(Solution::Integer(0), part_a("16"));
+        assert_eq!(Solution::Integer(0), part_a("16,16"))
     }
     #[test]
     fn distance_one() {
-        assert_eq!(2, part_a("16,14"))
+        assert_eq!(Solution::Integer(2), part_a("16,14"))
     }
 }

@@ -1,4 +1,6 @@
-pub fn part_a(file: &str) -> i64 {
+use crate::solutions::Solution;
+
+pub fn part_a(file: &str) -> Solution {
     let data: Vec<Vec<u8>> = file
         .lines()
         .map(|l| l.chars().map(|c| (c as u8) - b'0').collect())
@@ -22,7 +24,7 @@ pub fn part_a(file: &str) -> i64 {
         }
     }
 
-    sum
+    Solution::Integer(sum)
 }
 
 #[cfg(test)]
@@ -37,6 +39,6 @@ mod tests {
             .join("day9_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(15, part_a(&file));
+        assert_eq!(Solution::Integer(15), part_a(&file));
     }
 }

@@ -1,3 +1,5 @@
+use crate::solutions::Solution;
+
 struct Board {
     numbers: Vec<u8>,
 }
@@ -55,32 +57,36 @@ impl Board {
     }
 }
 
-pub fn part_a(file: &str) -> i64 {
+pub fn part_a(file: &str) -> Solution {
     let lines: Vec<&str> = file.lines().collect();
 
     let first_line: Vec<u8> = lines[0].split(',').flat_map(str::parse).collect();
 
-    (&lines[2..])
-        .chunks(6)
-        .map(Board::parse)
-        .map(|b| b.bingo_index(&first_line))
-        .min_by(|a, b| a.0.cmp(&b.0))
-        .unwrap()
-        .1 as i64
+    Solution::Integer(
+        (&lines[2..])
+            .chunks(6)
+            .map(Board::parse)
+            .map(|b| b.bingo_index(&first_line))
+            .min_by(|a, b| a.0.cmp(&b.0))
+            .unwrap()
+            .1 as i64,
+    )
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let lines: Vec<&str> = file.lines().collect();
 
     let first_line: Vec<u8> = lines[0].split(',').flat_map(str::parse).collect();
 
-    (&lines[2..])
-        .chunks(6)
-        .map(Board::parse)
-        .map(|b| b.bingo_index(&first_line))
-        .max_by(|a, b| a.0.cmp(&b.0))
-        .unwrap()
-        .1 as i64
+    Solution::Integer(
+        (&lines[2..])
+            .chunks(6)
+            .map(Board::parse)
+            .map(|b| b.bingo_index(&first_line))
+            .max_by(|a, b| a.0.cmp(&b.0))
+            .unwrap()
+            .1 as i64,
+    )
 }
 
 #[cfg(test)]
@@ -95,6 +101,6 @@ mod tests {
             .join("day4_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(4512, part_a(&file));
+        assert_eq!(Solution::Integer(4512), part_a(&file));
     }
 }

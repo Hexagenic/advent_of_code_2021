@@ -2,6 +2,15 @@ use std::env;
 mod error;
 mod solutions;
 use error::Error;
+use solutions::Solution;
+
+fn print_solution(day: u8, part: char, solution: Option<solutions::Solution>) {
+    match solution {
+        Some(Solution::Integer(i)) => println!("{}{}: {}", day, part, i),
+        Some(Solution::String(string)) => println!("{}{}:\n{}", day, part, string),
+        None => println!("{}{}: Incomplete", day, part),
+    }
+}
 
 fn run() -> Result<(), Error> {
     let (times, puzzles) = get_args()?;
@@ -19,17 +28,8 @@ fn run() -> Result<(), Error> {
 
             let file: String = std::fs::read_to_string(&path)?;
 
-            if let Some(solution1) = solution1 {
-                println!("{}a: {}", day, solution1(&file));
-            } else {
-                println!("{}a: Incomplete", day);
-            }
-
-            if let Some(solution2) = solution2 {
-                println!("{}b: {}", day, solution2(&file));
-            } else {
-                println!("{}b: Incomplete", day);
-            }
+            print_solution(*day, 'a', solution1.map(|s| s(&file)));
+            print_solution(*day, 'b', solution2.map(|s| s(&file)));
         }
 
         println!("Done");

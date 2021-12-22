@@ -1,3 +1,5 @@
+use crate::solutions::Solution;
+
 fn matching_tag(c: char) -> char {
     match c {
         ')' => '(',
@@ -71,18 +73,20 @@ fn score_of_fix(c: char) -> i64 {
     }
 }
 
-pub fn part_a(file: &str) -> i64 {
-    file.lines()
-        .filter_map(first_error)
-        .map(score_of_error)
-        .sum()
+pub fn part_a(file: &str) -> Solution {
+    Solution::Integer(
+        file.lines()
+            .filter_map(first_error)
+            .map(score_of_error)
+            .sum(),
+    )
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let mut fixes: Vec<i64> = file.lines().map(stack_repair).filter(|v| v > &0).collect();
     fixes.sort_unstable();
 
-    fixes[fixes.len() / 2]
+    Solution::Integer(fixes[fixes.len() / 2])
 }
 
 #[cfg(test)]
@@ -106,7 +110,7 @@ mod tests {
             .join("day10_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(26397, part_a(&file));
+        assert_eq!(Solution::Integer(26397), part_a(&file));
     }
 
     #[test]
@@ -126,6 +130,6 @@ mod tests {
             .join("day10_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(288957, part_b(&file));
+        assert_eq!(Solution::Integer(288957), part_b(&file));
     }
 }

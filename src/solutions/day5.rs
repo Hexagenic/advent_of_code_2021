@@ -1,3 +1,5 @@
+use crate::solutions::Solution;
+
 #[derive(Debug, Eq, PartialEq, Hash, Copy, Clone)]
 struct Point {
     x: i64,
@@ -96,19 +98,23 @@ impl Canvas {
     }
 }
 
-pub fn part_a(file: &str) -> i64 {
-    file.lines()
-        .map(Line::parse_line)
-        .filter(Line::is_hor_or_vert)
-        .fold(Canvas::new(), |acc, l| acc.draw(&l))
-        .count()
+pub fn part_a(file: &str) -> Solution {
+    Solution::Integer(
+        file.lines()
+            .map(Line::parse_line)
+            .filter(Line::is_hor_or_vert)
+            .fold(Canvas::new(), |acc, l| acc.draw(&l))
+            .count(),
+    )
 }
 
-pub fn part_b(file: &str) -> i64 {
-    file.lines()
-        .map(Line::parse_line)
-        .fold(Canvas::new(), |acc, l| acc.draw(&l))
-        .count()
+pub fn part_b(file: &str) -> Solution {
+    Solution::Integer(
+        file.lines()
+            .map(Line::parse_line)
+            .fold(Canvas::new(), |acc, l| acc.draw(&l))
+            .count(),
+    )
 }
 
 #[cfg(test)]
@@ -123,7 +129,7 @@ mod tests {
             .join("day5.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(7142, part_a(&file));
+        assert_eq!(Solution::Integer(7142), part_a(&file));
     }
 
     #[test]
@@ -134,7 +140,7 @@ mod tests {
             .join("day5.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(20012, part_b(&file));
+        assert_eq!(Solution::Integer(20012), part_b(&file));
     }
 
     #[test]
@@ -145,7 +151,7 @@ mod tests {
             .join("day5_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(5, part_a(&file));
+        assert_eq!(Solution::Integer(5), part_a(&file));
     }
 
     #[test]
@@ -156,7 +162,7 @@ mod tests {
             .join("day5_test.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
 
-        assert_eq!(12, part_b(&file));
+        assert_eq!(Solution::Integer(12), part_b(&file));
     }
 
     #[test]

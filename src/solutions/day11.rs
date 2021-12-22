@@ -1,3 +1,5 @@
+use crate::solutions::Solution;
+
 type Octopi = Vec<i32>;
 type OctopiSlice = [i32];
 
@@ -101,12 +103,12 @@ fn step_to_all_flash(initial: Octopi) -> i64 {
     }
 }
 
-pub fn part_a(file: &str) -> i64 {
-    step_n(parse_octopi(file), 100)
+pub fn part_a(file: &str) -> Solution {
+    Solution::Integer(step_n(parse_octopi(file), 100))
 }
 
-pub fn part_b(file: &str) -> i64 {
-    step_to_all_flash(parse_octopi(file))
+pub fn part_b(file: &str) -> Solution {
+    Solution::Integer(step_to_all_flash(parse_octopi(file)))
 }
 
 #[cfg(test)]

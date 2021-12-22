@@ -2,6 +2,7 @@ mod day1;
 mod day10;
 mod day11;
 mod day12;
+mod day13;
 mod day2;
 mod day3;
 mod day4;
@@ -11,7 +12,13 @@ mod day7;
 mod day8;
 mod day9;
 
-pub type PuzzleSolution = Option<fn(&str) -> i64>;
+#[derive(Debug, PartialEq, Eq)]
+pub enum Solution {
+    Integer(i64),
+    String(String),
+}
+
+pub type PuzzleSolution = Option<fn(&str) -> Solution>;
 
 #[must_use]
 pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
@@ -28,6 +35,7 @@ pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
         10 => (Some(day10::part_a), Some(day10::part_b)),
         11 => (Some(day11::part_a), Some(day11::part_b)),
         12 => (Some(day12::part_a), None),
+        13 => (Some(day13::part_a), Some(day13::part_b)),
         _ => (None, None),
     }
 }

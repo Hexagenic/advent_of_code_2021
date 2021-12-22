@@ -1,3 +1,5 @@
+use crate::solutions::Solution;
+
 #[derive(Debug)]
 struct BitCounter {
     bits: Vec<u64>,
@@ -47,13 +49,13 @@ fn fold_func(acc: BitCounter, value: &str) -> BitCounter {
     acc
 }
 
-pub fn part_a(file: &str) -> i64 {
+pub fn part_a(file: &str) -> Solution {
     let counter = file
         .split_ascii_whitespace()
         .fold(BitCounter::new(), fold_func);
 
     let (gamma, epsilon) = common_bits(&counter);
-    gamma * epsilon
+    Solution::Integer(gamma * epsilon)
 }
 
 fn life_support(data: &[&str], oxygen_generator: bool) -> i64 {
@@ -102,9 +104,9 @@ fn life_support(data: &[&str], oxygen_generator: bool) -> i64 {
     i64::from_str_radix(filter_string.as_str(), 2).unwrap()
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let data: Vec<&str> = file.split_ascii_whitespace().collect();
-    (life_support(&data, true) * life_support(&data, false)) as i64
+    Solution::Integer((life_support(&data, true) * life_support(&data, false)) as i64)
 }
 
 #[cfg(test)]
@@ -130,7 +132,7 @@ mod tests {
     #[test]
     fn part_b_example() {
         let file = "00100 11110 10110 10111 10101 01111 00111 11100 10000 11001 00010 01010";
-        assert_eq!(230, part_b(file));
+        assert_eq!(Solution::Integer(230), part_b(file));
     }
 
     #[test]
