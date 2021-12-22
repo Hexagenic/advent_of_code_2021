@@ -3,6 +3,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
@@ -36,6 +37,7 @@ pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
         11 => (Some(day11::part_a), Some(day11::part_b)),
         12 => (Some(day12::part_a), None),
         13 => (Some(day13::part_a), Some(day13::part_b)),
+        14 => (Some(day14::part_a), Some(day14::part_b)),
         _ => (None, None),
     }
 }
