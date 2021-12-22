@@ -1,6 +1,7 @@
+use crate::solutions::Solution;
 use rayon::prelude::*;
 
-pub fn part_a(file: &str) -> i64 {
+pub fn part_a(file: &str) -> Solution {
     fn count_easy(acc: i64, output: &str) -> i64 {
         acc + (output
             .split_ascii_whitespace()
@@ -8,9 +9,11 @@ pub fn part_a(file: &str) -> i64 {
             .count() as i64)
     }
 
-    file.lines()
-        .filter_map(|l| l.split(" | ").nth(1))
-        .fold(0, count_easy)
+    Solution::Integer(
+        file.lines()
+            .filter_map(|l| l.split(" | ").nth(1))
+            .fold(0, count_easy),
+    )
 }
 
 fn to_segments(string: &str) -> u8 {
@@ -79,10 +82,12 @@ fn solve_line(line: &str) -> i64 {
     decode(parts[1], key)
 }
 
-pub fn part_b(file: &str) -> i64 {
-    file.par_lines()
-        .fold(|| 0, |acc, line| acc + solve_line(line))
-        .sum()
+pub fn part_b(file: &str) -> Solution {
+    Solution::Integer(
+        file.par_lines()
+            .fold(|| 0, |acc, line| acc + solve_line(line))
+            .sum(),
+    )
 }
 
 #[cfg(test)]
@@ -96,7 +101,7 @@ mod tests {
             .join("input")
             .join("day8.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
-        assert_eq!(349, part_a(&file))
+        assert_eq!(Solution::Integer(349), part_a(&file))
     }
 
     #[test]
@@ -106,11 +111,11 @@ mod tests {
             .join("input")
             .join("day8.txt");
         let file: String = std::fs::read_to_string(&path).unwrap();
-        assert_eq!(1070957, part_b(&file))
+        assert_eq!(Solution::Integer(1070957), part_b(&file))
     }
 
     #[test]
     fn part_b_example() {
-        assert_eq!(5353, part_b("acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"));
+        assert_eq!(Solution::Integer(5353), part_b("acedgfb cdfbe gcdfa fbcad dab cefabd cdfgeb eafb cagedb ab | cdfeb fcadb cdfeb cdbaf"));
     }
 }

@@ -1,4 +1,6 @@
-pub fn part_a(file: &str) -> i64 {
+use crate::solutions::Solution;
+
+pub fn part_a(file: &str) -> Solution {
     let lines = file.split_whitespace().flat_map(str::parse);
     let mut last_line: Option<i32> = None;
 
@@ -13,10 +15,10 @@ pub fn part_a(file: &str) -> i64 {
         last_line = Some(line);
     }
 
-    count
+    Solution::Integer(count)
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let lines: Vec<i32> = file.split_whitespace().flat_map(str::parse).collect();
 
     let mut last_line: Option<i32> = None;
@@ -33,5 +35,5 @@ pub fn part_b(file: &str) -> i64 {
         last_line = Some(line);
     }
 
-    count
+    Solution::Integer(count)
 }

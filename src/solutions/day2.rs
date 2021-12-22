@@ -1,4 +1,5 @@
 use crate::error::Error;
+use crate::solutions::Solution;
 
 enum Command {
     Forward(i64),
@@ -22,7 +23,7 @@ fn parse_command(input: &str) -> Result<Command, Error> {
 }
 
 #[cfg(not(feature = "with-rayon"))]
-pub fn part_a(file: &str) -> i64 {
+pub fn part_a(file: &str) -> Solution {
     let commands = file
         .split('\n')
         .filter(|l| !l.is_empty())
@@ -39,11 +40,11 @@ pub fn part_a(file: &str) -> i64 {
         }
     }
 
-    depth * distance
+    Solution::Integer(depth * distance)
 }
 
 #[cfg(feature = "with-rayon")]
-pub fn part_a(file: &str) -> i64 {
+pub fn part_a(file: &str) -> Solution {
     use rayon::prelude::*;
 
     struct Location {
@@ -90,10 +91,10 @@ pub fn part_a(file: &str) -> i64 {
         .flat_map(parse_command)
         .map(Location::from_command)
         .reduce(|| Location::default(), Location::add);
-    location.depth * location.distance
+    Solution::Integer(location.depth * location.distance)
 }
 
-pub fn part_b(file: &str) -> i64 {
+pub fn part_b(file: &str) -> Solution {
     let commands = file
         .split('\n')
         .filter(|l| !l.is_empty())
@@ -114,5 +115,5 @@ pub fn part_b(file: &str) -> i64 {
         }
     }
 
-    depth * distance
+    Solution::Integer(depth * distance)
 }

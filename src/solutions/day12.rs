@@ -1,3 +1,4 @@
+use crate::solutions::Solution;
 use std::collections::HashMap;
 
 #[derive(Debug, PartialEq, Eq)]
@@ -65,12 +66,12 @@ fn recursive_travel<'a>(graph: &Graph<'a>, current: &Node<'a>, path: &mut Vec<No
     count
 }
 
-pub fn part_a(file: &str) -> i64 {
-    recursive_travel(
+pub fn part_a(file: &str) -> Solution {
+    Solution::Integer(recursive_travel(
         &parse_edges(file),
         &Node::Start,
         &mut Vec::with_capacity(100),
-    )
+    ))
 }
 
 #[cfg(test)]
@@ -100,8 +101,8 @@ mod tests {
 
     #[test]
     fn part_a_examples() {
-        assert_eq!(10, part_a(&SMALL_EXAMPLE));
-        assert_eq!(19, part_a(&MEDIUM_EXAMPLE));
-        assert_eq!(226, part_a(&LARGE_EXAMPLE));
+        assert_eq!(Solution::Integer(10), part_a(&SMALL_EXAMPLE));
+        assert_eq!(Solution::Integer(19), part_a(&MEDIUM_EXAMPLE));
+        assert_eq!(Solution::Integer(226), part_a(&LARGE_EXAMPLE));
     }
 }

@@ -7,7 +7,7 @@ use criterion::BenchmarkId;
 use criterion::Criterion;
 
 #[derive(Clone, Copy)]
-struct DayPart(u8, u8, fn(&str) -> i64);
+struct DayPart(u8, u8, fn(&str) -> advent_of_code_2021::solutions::Solution);
 
 impl std::fmt::Display for DayPart {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
