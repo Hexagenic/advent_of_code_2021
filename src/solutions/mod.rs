@@ -43,4 +43,4 @@ pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
 }
 
 #[allow(unused)]
-pub const MAX_SOLVED_DAY: u8 = 12;
+pub const MAX_SOLVED_DAY: u8 = 14;
