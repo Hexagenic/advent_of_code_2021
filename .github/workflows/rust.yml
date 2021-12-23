@@ -27,7 +27,7 @@ jobs:
     - name: Run tests
       run: cargo test --verbose
     - name: Run clippy
-      run: cargo clippy -- -D clippy::all -D clippy::pedantic
+      run: cargo clippy
     - name: Run fmt
       run: cargo fmt -- --check
   bench:

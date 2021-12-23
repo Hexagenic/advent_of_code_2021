@@ -4,6 +4,7 @@ mod day11;
 mod day12;
 mod day13;
 mod day14;
+mod day15;
 mod day2;
 mod day3;
 mod day4;
@@ -38,9 +39,10 @@ pub fn get_solution(day: u8) -> (PuzzleSolution, PuzzleSolution) {
         12 => (Some(day12::part_a), None),
         13 => (Some(day13::part_a), Some(day13::part_b)),
         14 => (Some(day14::part_a), Some(day14::part_b)),
+        15 => (Some(day15::part_a), Some(day15::part_b)),
         _ => (None, None),
     }
 }
 
 #[allow(unused)]
-pub const MAX_SOLVED_DAY: u8 = 14;
+pub const MAX_SOLVED_DAY: u8 = 15;
