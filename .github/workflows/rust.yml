@@ -32,6 +32,7 @@ jobs:
       run: cargo fmt -- --check
   bench:
     name: Bench
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
