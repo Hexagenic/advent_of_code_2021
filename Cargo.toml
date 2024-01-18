@@ -10,7 +10,7 @@ with-rayon = []
 criterion = {version="0.5.1", features=["html_reports"]}
 
 [dependencies]
-rayon = "1.8.0"
+rayon = "1.8.1"
 hex = "0.4.3"
 regex = "1.10.2"
 
